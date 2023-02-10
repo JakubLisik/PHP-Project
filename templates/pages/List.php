@@ -42,17 +42,21 @@
           $currentPage = $page['number'] ?? 1;
           $pages = $page['pages'] ?? 1;
 
+          $phrase = $params['phrase'] ?? null;
         ?>
 
     <div>
       <form class="settings-form" action="/" method="GET">
+        <div>
+          <label>Wyszuaj:<input type="text" name="phrase" value="<?php echo $phrase ?>"/></label>
+        </div>
         <div>
           <div>Sortuj po:</div>
           <label>Tytule: <input name="sortby" type="radio" value="title" <?php echo $by === 'title' ? 'checked' : ''  ?>/></label>
           <label>Dacie: <input name="sortby" type="radio" value="created" <?php echo $by === 'created' ? 'checked' : ''  ?>/></label>
         </div>
         <div>
-        <div>Kierunek sortowanie:</div>
+          <div>Kierunek sortowanie:</div>
           <label>Rosnąco: <input name="sortorder" type="radio" value="asc" <?php echo $order === 'asc' ? 'checked' : ''  ?>/></label>
           <label>Malejąco: <input name="sortorder" type="radio" value="desc" <?php echo $order === 'desc' ? 'checked' : ''  ?>/></label>
         </div>
@@ -102,7 +106,7 @@
     </div>
 
     <?php
-      $paginationUrl = "&pagesize=$size&sortby=$by&sortorder=$order";
+      $paginationUrl = "&pagesize=$size&sortby=$by&sortorder=$order&phrase=$phrase";
     ?>
 
     <ul class='pagination'>
