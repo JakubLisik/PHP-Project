@@ -43,6 +43,7 @@ class Database
     }
 
     public function searchNotes(
+        string $date,
         string $phrase,
         int $pageNumber,
         int $pageSize,
@@ -62,11 +63,12 @@ class Database
             }
 
             $phrase = $this->conn->quote('%' . $phrase . '%', PDO::PARAM_STR);
+            $date = $this->conn->quote($date . '%', PDO::PARAM_STR);
             
             $query = "
                 SELECT id, title, created
                 FROM notes
-                WHERE title LIKE ($phrase)
+                WHERE title LIKE ($phrase) AND created LIKE ($date)
                 ORDER BY $sortBy $sortOrder
                 LIMIT $offset, $limit
             ";
@@ -77,11 +79,12 @@ class Database
         }
     }
 
-    public function getSearchCount(string $phrase): int
+    public function getSearchCount(string $date, string $phrase): int
     {
         try {   
             $phrase = $this->conn->quote('%' . $phrase . '%', PDO::PARAM_STR);          
-            $query = "SELECT count(*) AS cn FROM notes WHERE title LIKE ($phrase)";
+            $date = $this->conn->quote($date . '%', PDO::PARAM_STR);          
+            $query = "SELECT count(*) AS cn FROM notes WHERE title LIKE ($phrase) AND created LIKE ($date)";
             $result = $this->conn->query($query);
             $result =  $result->fetch(PDO::FETCH_ASSOC);
             if ($result === false) {

@@ -43,12 +43,14 @@
           $pages = $page['pages'] ?? 1;
 
           $phrase = $params['phrase'] ?? null;
+          $date = $params['date'] ?? null;
         ?>
 
     <div>
       <form class="settings-form" action="/" method="GET">
         <div>
           <label>Wyszuaj:<input type="text" name="phrase" value="<?php echo $phrase ?>"/></label>
+          <label><input type="date" name="date" value="<?php echo $date ?>"></label>
         </div>
         <div>
           <div>Sortuj po:</div>
@@ -106,7 +108,7 @@
     </div>
 
     <?php
-      $paginationUrl = "&pagesize=$size&sortby=$by&sortorder=$order&phrase=$phrase";
+      $paginationUrl = "&pagesize=$size&sortby=$by&sortorder=$order&phrase=$phrase&date=$date";
     ?>
 
     <ul class='pagination'>
